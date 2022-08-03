@@ -1,0 +1,24 @@
+spring:
+  h2:
+    console:
+      enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+  endpoint:
+    health:
+      show-details: always
+  info:
+    env:
+      enabled: true
+
+info:
+  application:
+    name: @project.name@
+    description: @project.description@
+    version: '@project.version@'
+

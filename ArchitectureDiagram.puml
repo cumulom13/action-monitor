@@ -1,0 +1,28 @@
+@startuml
+
+Actor User
+participant action
+queue websocket as ws
+participant monitor
+database "H2 db" as DB
+
+== Create message ==
+
+User -> action++: send POST to create message
+action -> DB: message stored in db
+action -> ws++: message is sent to websocket
+action -> User -- : message info returned to the user
+ws -> monitor--: The message in the ws is \n received by the monitor
+monitor -> monitor: message is processed and showed
+
+== Update message ==
+
+User -> action++: send PUT request to update a message
+action -> DB: message retrieved from db
+action -> action: message object updated
+action -> ws++: message is sent to websocket
+action -> User -- : updated message info returned to the user
+ws -> monitor--: The message in the ws is \n received by the monitor
+monitor -> monitor: message is processed and showed
+
+@enduml
