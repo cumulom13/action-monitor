@@ -24,11 +24,27 @@ java -jar action-monitor-0.0.1-SNAPSHOT.jar
 
 This will start the application in port 8080.
 
+## Send a message to the websocket and store it in the db
+
+A message can be added with the following curl command
+
+```aidl
+curl --location --request POST 'localhost:8080/messages' --header 'Content-Type: application/json' --data-raw '{"messageContent":"add message"}'
+```
+
+## Update a message
+
+It can be done by running
+
+```aidl
+curl --location --request PUT 'localhost:8080/messages/1' --header 'Content-Type: application/json' --data-raw '{ "messageContent":"update message" }'
+```
+
 ## Check application status
 
 Once the application is running go to
 
-(status endpoint)[http://localhost:8080/actuator/health]
+[status endpoint](http://localhost:8080/actuatohealth)
 
 Spring boot start actuator has been used for this endpoint
 

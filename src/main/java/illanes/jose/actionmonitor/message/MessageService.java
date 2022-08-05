@@ -22,14 +22,10 @@ public class MessageService {
 
     private final MessageWebsocketService messageWebsocketService;
 
-    public MessageEventDTO createMessage(String messageContent) {
-        var savedMessage = messageRepository.save(buildMessage(messageContent));
+    public MessageEventDTO createMessage(MessageDTO messageDTO) {
+        var savedMessage = messageRepository.save(buildMessage(messageDTO));
         log.info("Message {} has been saved in the db", savedMessage);
         return messageWebsocketService.convertMessageAndSend(savedMessage, false);
-    }
-
-    public MessageEventDTO createMessage(MessageDTO messageDTO) {
-        return createMessage(messageDTO.getMessageContent());
     }
 
     @Transactional
@@ -40,9 +36,9 @@ public class MessageService {
         return messageWebsocketService.convertMessageAndSend(message, true);
     }
 
-    private Message buildMessage(String messageContent) {
+    private Message buildMessage(MessageDTO messageDTO) {
         return Message.builder()
-                .messageContent(messageContent)
+                .messageContent(messageDTO.getMessageContent())
                 .build();
     }
 }
